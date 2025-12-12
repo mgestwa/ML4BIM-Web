@@ -1,16 +1,97 @@
 ---
-
+// src/pages/index.astro
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang="pl" class="scroll-smooth">
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+        <!-- Fonty -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+		<title>ML4BIM | Research Journal</title>
 	</head>
-	<body>
-		<h1>Astro</h1>
+	<body class="bg-dark text-slate-300 font-sans antialiased selection:bg-ml selection:text-white">
+        <!-- Tło siatki -->
+        <div class="fixed inset-0 pointer-events-none z-0 opacity-20" 
+             style="background-image: linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px); background-size: 40px 40px;">
+        </div>
+        
+        <!-- NAVBAR -->
+        <nav class="relative z-10 border-b border-slate-800 bg-dark/90 backdrop-blur-md sticky top-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center">
+                        <a href="/" class="font-mono text-xl font-bold text-white tracking-tighter hover:opacity-80 transition-opacity">
+                            <span class="text-ml">ML</span>4<span class="text-bim">BIM</span>_
+                        </a>
+                    </div>
+                    <div class="hidden md:flex space-x-8 text-sm font-mono items-center">
+                        <a href="#" class="text-white hover:text-ml transition-colors">Dziennik</a>
+                        <a href="#" class="hover:text-ml transition-colors">Zbiory Danych</a>
+                        <a href="#" class="hover:text-ml transition-colors">Modele</a>
+                        <a href="#" class="hover:text-ml transition-colors">O Projekcie</a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                         <div class="flex items-center bg-slate-800 rounded-md p-1 border border-slate-700 font-mono text-xs">
+                            <button class="px-2 py-1 rounded bg-slate-600 text-white">PL</button>
+                            <button class="px-2 py-1 rounded text-slate-400 hover:text-white">EN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <header class="relative z-10 pt-20 pb-16 text-center max-w-4xl mx-auto px-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-xs font-mono text-ml mb-6">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                System status: Learning...
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
+                Łączymy <span class="text-bim">Dane Budynkowe</span> <br>
+                z <span class="text-ml">Uczniem Maszynowym</span>
+            </h1>
+            
+            <p class="text-lg text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Projekt R&D typu Open Source. Od surowych plików IFC, przez algorytmy Scikit-Learn, 
+                aż po automatyzację analiz energetycznych.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-12 font-mono text-xs md:text-sm text-slate-500">
+                <div class="flex items-center gap-2"><span class="text-bim font-bold">[IFC/Revit]</span><span>---></span></div>
+                <div class="flex items-center gap-2"><span class="text-white font-bold">[Python]</span><span>---></span></div>
+                <div class="flex items-center gap-2"><span class="text-ml font-bold">[ML Models]</span><span>---></span></div>
+                <div class="flex items-center gap-2"><span class="text-green-400 font-bold">[Optimization]</span></div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- KARTA 1 -->
+                <article class="group bg-card border border-slate-800 rounded-lg overflow-hidden hover:border-bim/50 transition-all cursor-pointer flex flex-col h-full">
+                    <div class="h-48 bg-slate-900 p-4 font-mono text-xs text-slate-500 border-b border-slate-800 relative overflow-hidden">
+                        <span class="text-purple-400">def</span> <span class="text-blue-400">extract_ifc</span>(file):<br>
+                        &nbsp;&nbsp;model = ifcopenshell.open(file)<br>
+                        &nbsp;&nbsp;<span class="text-purple-400">return</span> "Data Ready"
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex gap-2 mb-3">
+                            <span class="text-[10px] font-mono text-bim bg-bim/10 px-2 py-1 rounded">DATASET</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-bim transition-colors">Start Projektu</h3>
+                        <p class="text-slate-400 text-sm mb-4">Pierwszy wpis w dzienniku ML4BIM.</p>
+                    </div>
+                </article>
+            </div>
+        </main>
+
+        <footer class="border-t border-slate-800 bg-dark py-12 mt-12 text-center text-slate-600 text-sm font-mono">
+            <p>&copy; 2025 ML4BIM.</p>
+        </footer>
 	</body>
 </html>
