@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("journal"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("pl-PL", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout title="Dziennik | ML4BIM">
+  <header class="relative z-10 pt-16 pb-8 max-w-4xl mx-auto px-4">
+    <h1
+      class="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight"
+    >
+      Dziennik <span class="text-ml">Badawczy</span>
+    </h1>
+    <p class="text-slate-400 text-lg max-w-2xl">
+      Kronika projektu ML4BIM — od surowych danych IFC po modele ML.
+    </p>
+  </header>
+
+  <main class="relative z-10 max-w-4xl mx-auto px-4 pb-16">
+    <div class="space-y-6">
+      {
+        posts.map((post) => (
+          <a
+            href={`/journal/${post.id}/`}
+            class="block group bg-card border border-slate-800 rounded-lg p-6 hover:border-ml/50 transition-all"
+          >
+            <div class="flex flex-wrap items-center gap-3 mb-3">
+              <time
+                datetime={post.data.date.toISOString()}
+                class="text-xs font-mono text-slate-500"
+              >
+                {formatDate(post.data.date)}
+              </time>
+              {post.data.tags.map((tag) => (
+                <span class="text-[10px] font-mono text-bim bg-bim/10 px-2 py-0.5 rounded uppercase">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h2 class="text-xl font-bold text-white mb-2 group-hover:text-ml transition-colors">
+              {post.data.title}
+            </h2>
+            <p class="text-slate-400 text-sm">{post.data.description}</p>
+          </a>
+        ))
+      }
+    </div>
+
+    {
+      posts.length === 0 && (
+        <p class="text-slate-500 font-mono text-center py-20">
+          Brak wpisów. Dodaj plik .md do src/content/journal/
+        </p>
+      )
+    }
+  </main>
+</BaseLayout>
