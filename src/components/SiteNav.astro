@@ -1,0 +1,178 @@
+---
+import { siteConfig } from "../site.config";
+import { useTranslations, getLocalizedPath, type Locale } from "../i18n/ui";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = "pl" } = Astro.props;
+const t = useTranslations(lang);
+const otherLang: Locale = lang === "pl" ? "en" : "pl";
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const navLinks = [
+  { href: getLocalizedPath("/journal/", lang), label: t("nav.journal"), activePrefix: `${lang === "en" ? "/en" : ""}/journal` },
+  { href: `${getLocalizedPath("/", lang)}#o-projekcie`, label: t("nav.about") },
+];
+
+function isActive(link: { href: string; activePrefix?: string }): boolean {
+  return "activePrefix" in link && link.activePrefix
+    ? pathname.startsWith(link.activePrefix)
+    : false;
+}
+
+function navClass(active: boolean): string {
+  return active ? "text-ml" : "text-slate-300 hover:text-ml";
+}
+
+const switchPath = getLocalizedPath(
+  lang === "en" ? pathname.replace(/^\/en/, "") || "/" : pathname,
+  otherLang
+);
+---
+
+<nav
+  class="sticky top-0 z-50 border-b border-slate-800 bg-dark/90 backdrop-blur-md"
+  aria-label={lang === "pl" ? "Główna nawigacja" : "Main navigation"}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center gap-4">
+      <a
+        href={getLocalizedPath("/", lang)}
+        class="font-mono text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-80 transition-opacity shrink-0"
+      >
+        <span class="text-ml">ML</span>4<span class="text-bim">BIM</span>_
+      </a>
+
+      <div class="hidden md:flex space-x-8 text-sm font-mono items-center">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={["transition-colors", navClass(isActive(link))]}
+              aria-current={isActive(link) ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a
+          href={switchPath}
+          class="inline-flex items-center px-2.5 py-1 text-xs font-mono font-bold text-slate-400 border border-slate-700 rounded-md hover:border-ml/50 hover:text-white transition-colors"
+          title={t("lang.label")}
+        >
+          {t("lang.switch")}
+        </a>
+        <a
+          href={siteConfig.githubUrl}
+          class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono text-slate-300 border border-slate-700 rounded-md hover:border-ml/50 hover:text-white transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+
+        <button
+          type="button"
+          id="mobile-menu-button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-slate-300 hover:text-white border border-slate-700 hover:border-slate-600 transition-colors"
+          aria-expanded="false"
+          aria-controls="mobile-menu-panel"
+          aria-label={lang === "pl" ? "Otwórz menu" : "Open menu"}
+        >
+          <svg
+            id="icon-menu-open"
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+          <svg
+            id="icon-menu-close"
+            class="h-5 w-5 hidden"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="mobile-menu-panel"
+    class="md:hidden hidden border-t border-slate-800 bg-dark/95 backdrop-blur-md"
+    role="region"
+    aria-label={lang === "pl" ? "Menu mobilne" : "Mobile menu"}
+  >
+    <div class="px-4 py-4 space-y-1 font-mono text-sm">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "block px-3 py-2 rounded-md transition-colors",
+              isActive(link)
+                ? "bg-slate-800 text-ml"
+                : "text-slate-300 hover:bg-slate-800/60 hover:text-white",
+            ]}
+            aria-current={isActive(link) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href={siteConfig.githubUrl}
+        class="block px-3 py-2 rounded-md text-slate-300 hover:bg-slate-800/60 hover:text-white transition-colors"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub ↗
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const button = document.getElementById("mobile-menu-button");
+  const panel = document.getElementById("mobile-menu-panel");
+  const iconOpen = document.getElementById("icon-menu-open");
+  const iconClose = document.getElementById("icon-menu-close");
+
+  if (button && panel && iconOpen && iconClose) {
+    button.addEventListener("click", () => {
+      const isOpen = !panel.classList.contains("hidden");
+      panel.classList.toggle("hidden", isOpen);
+      iconOpen.classList.toggle("hidden", !isOpen);
+      iconClose.classList.toggle("hidden", isOpen);
+      button.setAttribute("aria-expanded", String(!isOpen));
+      button.setAttribute(
+        "aria-label",
+        isOpen ? button.dataset.labelOpen || "Open" : button.dataset.labelClose || "Close"
+      );
+    });
+
+    panel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        panel.classList.add("hidden");
+        iconOpen.classList.remove("hidden");
+        iconClose.classList.add("hidden");
+        button.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+</script>

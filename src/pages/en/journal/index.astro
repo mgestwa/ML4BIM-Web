@@ -1,17 +1,17 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { useTranslations } from "../../i18n/ui";
+import { useTranslations } from "../../../i18n/ui";
 
-const lang = "pl";
+const lang = "en";
 const t = useTranslations(lang);
 
 const posts = (await getCollection("journal"))
-  .filter((p) => !p.data.draft && p.id.startsWith("pl/"))
+  .filter((p) => !p.data.draft && p.id.startsWith("en/"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 function formatDate(date: Date): string {
-  return date.toLocaleDateString("pl-PL", {
+  return date.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -35,14 +35,14 @@ function formatDate(date: Date): string {
     </p>
   </header>
 
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16" aria-label="Lista wpisów">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16" aria-label="Posts list">
     <div class="space-y-6 max-w-3xl">
       {
         posts.map((post) => {
-          const slug = post.id.replace(/^pl\//, "");
+          const slug = post.id.replace(/^en\//, "");
           return (
             <a
-              href={`/journal/${slug}/`}
+              href={`/en/journal/${slug}/`}
               class="block group bg-card border border-slate-800 rounded-lg p-6 hover:border-ml/50 transition-all"
             >
               <div class="flex flex-wrap items-center gap-3 mb-3">

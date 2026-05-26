@@ -1,20 +1,20 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { useTranslations } from "../i18n/ui";
-import { siteConfig } from "../site.config";
-import BimMlGraphic from "../components/BimMlGraphic.astro";
+import { useTranslations } from "../../i18n/ui";
+import { siteConfig } from "../../site.config";
+import BimMlGraphic from "../../components/BimMlGraphic.astro";
 
-const lang = "pl";
+const lang = "en";
 const t = useTranslations(lang);
 
 const posts = (await getCollection("journal"))
-  .filter((p) => !p.data.draft && p.id.startsWith("pl/"))
+  .filter((p) => !p.data.draft && p.id.startsWith("en/"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 6);
 
 function formatDate(date: Date): string {
-  return date.toLocaleDateString("pl-PL", {
+  return date.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -25,7 +25,7 @@ function formatDate(date: Date): string {
 <BaseLayout title={t("site.title")} description={t("site.description")} lang={lang}>
   <header class="pt-20 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <div class="lg:col-span-7 flex flex-col items-start opacity-0 animate-fade-in-up">
+      <div class="lg:col-span-7 flex flex-col items-start">
         <div
           class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-xs font-mono text-ml mb-6"
         >
@@ -48,7 +48,7 @@ function formatDate(date: Date): string {
 
         <div class="flex flex-wrap gap-3 mb-12">
           <a
-            href="/journal/"
+            href="/en/journal/"
             class="inline-flex items-center px-5 py-2.5 rounded-md bg-ml text-dark font-mono text-sm font-bold hover:bg-cyan-400 transition-colors"
           >
             {t("hero.cta.journal")}
@@ -120,7 +120,7 @@ function formatDate(date: Date): string {
           </li>
         </ol>
       </div>
-      <div class="lg:col-span-5 flex justify-center lg:justify-end w-full opacity-0 animate-fade-in-up" style="animation-delay: 150ms;">
+      <div class="lg:col-span-5 flex justify-center lg:justify-end w-full">
         <BimMlGraphic />
       </div>
     </div>
@@ -157,7 +157,7 @@ function formatDate(date: Date): string {
         {t("posts.heading")} <span class="text-ml">{t("posts.heading.accent")}</span>
       </h2>
       <a
-        href="/journal/"
+        href="/en/journal/"
         class="text-sm font-mono text-slate-500 hover:text-ml transition-colors"
       >
         {t("posts.all")} &rarr;
@@ -167,11 +167,11 @@ function formatDate(date: Date): string {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {
         posts.map((post, idx) => {
-          const slug = post.id.replace(/^pl\//, "");
+          const slug = post.id.replace(/^en\//, "");
           const delayClass = idx === 0 ? "reveal-delay-100" : idx === 1 ? "reveal-delay-200" : "reveal-delay-300";
           return (
             <a
-              href={`/journal/${slug}/`}
+              href={`/en/journal/${slug}/`}
               class={`reveal ${delayClass} group bg-card border border-slate-800/80 rounded-lg overflow-hidden hover:border-ml/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_-15px_rgba(6,182,212,0.15)] hover:shadow-ml/10 transition-all duration-300 flex flex-col h-full`}
             >
               <div class="aspect-video bg-slate-950 border-b border-slate-800/80 relative overflow-hidden shrink-0">
