@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import { useTranslations } from "../../../i18n/ui";
+import "katex/dist/katex.min.css";
 
 const lang = "en";
 const t = useTranslations(lang);
@@ -18,6 +19,9 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const alternatePath = post.data.translationSlug
+  ? `/journal/${post.data.translationSlug}/`
+  : "/journal/";
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-GB", {
@@ -33,6 +37,7 @@ function formatDate(date: Date): string {
   description={post.data.description}
   ogType="article"
   lang={lang}
+  alternatePath={alternatePath}
 >
   <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="max-w-3xl">

@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   ogType?: "website" | "article";
   lang?: Locale;
+  alternatePath?: string;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = siteConfig.description,
   ogType = "website",
   lang = "pl",
+  alternatePath,
 } = Astro.props;
 
 const t = useTranslations(lang);
@@ -65,7 +67,7 @@ const ogLocale = lang === "pl" ? "pl_PL" : "en_US";
     >
     </div>
 
-    <SiteNav lang={lang} />
+    <SiteNav lang={lang} alternatePath={alternatePath} />
 
     <div id="main-content" class="relative z-10">
       <slot />

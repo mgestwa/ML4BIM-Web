@@ -4,6 +4,7 @@ description: "Dlaczego rozkład danych jest jednym z pierwszych pojęć w ML4BIM
 date: 2026-05-25
 tags: ["bim", "ai", "statistics", "mep", "ifc"]
 thumbnail: "/journal/003-rozklad-danych/note01_mini.png"
+translationSlug: "003-data-distribution"
 draft: false
 ---
 

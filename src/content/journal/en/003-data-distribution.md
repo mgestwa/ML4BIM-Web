@@ -4,6 +4,7 @@ description: "Why data distribution is one of the first concepts worth understan
 date: 2026-05-25
 tags: ["bim", "ai", "statistics", "mep", "ifc"]
 thumbnail: "/journal/003-rozklad-danych/note01_mini.png"
+translationSlug: "003-rozklad-danych"
 draft: false
 ---
 

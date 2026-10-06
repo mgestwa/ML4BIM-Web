@@ -35,6 +35,13 @@ button:focus-visible {
   border-radius: 0.5rem;
 }
 
+/* Keep wide equations within the article on small screens. */
+.prose-journal .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.5rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
