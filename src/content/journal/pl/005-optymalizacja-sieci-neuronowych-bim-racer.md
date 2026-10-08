@@ -5,7 +5,7 @@ date: 2026-10-06
 tags: [BIM, AI, NEURAL NETWORKS, OPTIMIZATION, REVIT, MEP]
 thumbnail: "/journal/005-bim-racer/miniaturka.png"
 translationSlug: "005-neural-network-optimisation-bim-racer"
-draft: true
+draft: false
 ---
 
 Wyobraźmy sobie rzut kondygnacji w Revicie. Widzimy ściany, słupy i przejścia między pomieszczeniami. Wskazujemy punkt startowy oraz cel. Mały robot rusza, zbliża się do drzwi, skręca i próbuje przejechać dalej.

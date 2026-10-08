@@ -5,7 +5,7 @@ date: 2026-10-06
 tags: [BIM, AI, NEURAL NETWORKS, OPTIMIZATION, REVIT, MEP]
 thumbnail: "/journal/005-bim-racer/miniaturka.png"
 translationSlug: "005-optymalizacja-sieci-neuronowych-bim-racer"
-draft: true
+draft: false
 ---
 
 Imagine a floor plan in Revit. We can see walls, columns and passages between rooms. We choose a starting point and a destination. A small robot sets off, approaches a doorway, turns and tries to continue.
