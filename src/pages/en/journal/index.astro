@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { compareJournalPostsNewestFirst } from "../../../utils/journal";
 import { useTranslations } from "../../../i18n/ui";
 
 const lang = "en";
@@ -8,7 +9,7 @@ const t = useTranslations(lang);
 
 const posts = (await getCollection("journal"))
   .filter((p) => !p.data.draft && p.id.startsWith("en/"))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort(compareJournalPostsNewestFirst);
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-GB", {
